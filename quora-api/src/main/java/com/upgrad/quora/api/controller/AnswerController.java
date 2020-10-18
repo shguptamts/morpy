@@ -17,6 +17,9 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @RestController
 @RequestMapping("/")
 public class AnswerController {
@@ -31,20 +34,28 @@ public class AnswerController {
     private AnswerService answerService;
 
     @GetMapping(path = "/answer/all/{questionId}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public ResponseEntity<AnswerDetailsResponse> getAllAnswersToQuestion(@RequestHeader("authorization") final String authorization,
-                                                                         @PathVariable("questionId") final String questionUuid) throws AuthorizationFailedException, InvalidQuestionException {
+    public ResponseEntity<List<AnswerDetailsResponse>> getAllAnswersToQuestion(@RequestHeader("authorization") final String authorization,
+                                                                               @PathVariable("questionId") final String questionUuid) throws AuthorizationFailedException, InvalidQuestionException {
 
-       UserEntity userEntity = authenticationService.validateTokenForGetAllAnswersEndpoint(authorization);
+        UserEntity userEntity = authenticationService.validateTokenForGetAllAnswersEndpoint(authorization);
 
         QuestionEntity questionEntity =  questionService.getQuestionByUuid(questionUuid);
 
-        //TO DO : add answer content after clarification of query on discussion form
-        AnswerDetailsResponse answerDetailsResponse = new AnswerDetailsResponse().id(questionEntity.getUuid())
-                .questionContent(questionEntity.getContent());
 
-        return new ResponseEntity<AnswerDetailsResponse>(answerDetailsResponse, HttpStatus.OK);
+        List<AnswerDetailsResponse> answerDetailsResponseList  = new ArrayList<>();
 
+        //convert and add Answer Entities of a question to answer details response list
+        questionEntity.getAnswers()
+                .stream()
+                .forEach(x -> {
+                    AnswerDetailsResponse answerDetailsResponse = new AnswerDetailsResponse()
+                            .id(x.getUuid())
+                            .questionContent(x.getQuestion().getContent())
+                            .answerContent(x.getAns());
+                    answerDetailsResponseList.add(answerDetailsResponse);
+                });
 
+        return new ResponseEntity<List<AnswerDetailsResponse>>(answerDetailsResponseList, HttpStatus.OK);
     }
 
     @DeleteMapping(path = "/answer/delete/{answerId}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
