@@ -60,7 +60,6 @@ public class QuestionController {
    * @throws AuthorizationFailedException In case the access token is invalid.
    */
   @PostMapping(
-      method = RequestMethod.POST,
       path = "/question/create",
       produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
   public ResponseEntity<QuestionResponse> createQuestion(
@@ -83,7 +82,6 @@ public class QuestionController {
    * @throws AuthorizationFailedException In case the access token is invalid.
    */
   @GetMapping(
-      method = RequestMethod.GET,
       path = "/question/all",
       produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
   public ResponseEntity<List<QuestionDetailsResponse>> getAllQuestions(
