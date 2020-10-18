@@ -55,4 +55,13 @@ public class UserDao {
         entityManager.merge(userAuthEntity);
         return userAuthEntity;
     }
+
+    public UserEntity getUserByUuid(String userId) {
+        try{
+            return entityManager.createNamedQuery("UserEntity.userByUuid", UserEntity.class).setParameter("uuid",userId).getSingleResult();
+        }catch (NoResultException  nre){
+            return null;
+        }
+
+    }
 }
