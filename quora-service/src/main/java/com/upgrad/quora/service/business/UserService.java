@@ -11,7 +11,7 @@ import javax.transaction.Transactional;
 
 @Service
 public class UserService {
-
+/*
     @Autowired
     private UserDao userDao;
 
@@ -29,7 +29,7 @@ public class UserService {
      * @param userEntityLoggedIn  logged in user
      * @return  true if user can delete the answer
      * @throws AuthorizationFailedException exception is thrown if user is not allowed to delete the question
-     */
+     *//*
     public boolean authorize(UserEntity userEntityToDelete, UserEntity userEntityLoggedIn) throws AuthorizationFailedException {
         boolean isAdmin = userEntityLoggedIn.getRole().equals("admin");
         if(isAdmin){
@@ -43,5 +43,5 @@ public class UserService {
     public void delete(UserEntity userEntity) {
         userDao.delete(userEntity);
     }
-
+   */
 }
