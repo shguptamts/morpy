@@ -6,11 +6,12 @@ import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
+import javax.persistence.PersistenceContext;
 
 @Repository
 public class QuestionDao {
 
-    @Autowired
+    @PersistenceContext
     private EntityManager entityManager;
 
     public QuestionEntity getQuestionByUuid(final String uuid){
@@ -26,4 +27,15 @@ public class QuestionDao {
     public void delete(QuestionEntity questionEntity) {
         entityManager.remove(questionEntity);
     }
+
+   /**
+   * Persist the question in the DB.
+   *
+   * @param questionEntity question to be persisted.
+   * @return Persisted question.
+   */
+   public QuestionEntity createQuestion(QuestionEntity questionEntity) {
+       entityManager.persist(questionEntity);
+       return questionEntity;
+   }
 }
