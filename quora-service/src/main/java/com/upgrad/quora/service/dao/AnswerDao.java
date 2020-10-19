@@ -23,7 +23,16 @@ public class AnswerDao {
     }
 
     public void delete(AnswerEntity answerEntity) {
-        //answerEntity = entityManager.find(AnswerEntity.class, answerEntity.getId());
         entityManager.remove(answerEntity);
+    }
+
+    public AnswerEntity createAnswer(AnswerEntity answerEntity) {
+        entityManager.persist(answerEntity);
+        return  answerEntity;
+    }
+
+    public AnswerEntity editAnswer(AnswerEntity answerEntity) {
+        entityManager.merge(answerEntity);
+        return  answerEntity;
     }
 }

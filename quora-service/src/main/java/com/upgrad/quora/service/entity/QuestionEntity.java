@@ -8,6 +8,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.time.ZonedDateTime;
+import java.util.List;
 
 @Entity
 @Table(name = "question")
@@ -39,6 +40,9 @@ public class QuestionEntity implements Serializable {
     @JoinColumn( name = "user_id")
     @OnDelete(action = OnDeleteAction.CASCADE)
     private UserEntity user;
+
+    @OneToMany(mappedBy = "question", fetch = FetchType.LAZY)
+    private List<AnswerEntity> answers;
 
     public int getId() {
         return id;
@@ -78,5 +82,13 @@ public class QuestionEntity implements Serializable {
 
     public void setUser(UserEntity user) {
         this.user = user;
+    }
+
+    public List<AnswerEntity> getAnswers() {
+        return answers;
+    }
+
+    public void setAnswers(List<AnswerEntity> answers) {
+        this.answers = answers;
     }
 }
