@@ -108,4 +108,13 @@ public class AuthenticationService {
     public UserEntity validateTokenForGetAllquestionsEndpoint(final String authorization) throws AuthorizationFailedException {
         return this.validateToken(authorization, ErrorMessage.USER_SIGNED_OUT_CAN_NOT_GET_ALL_QUESTION);
     }
+
+    public UserEntity validateTokenForDeleteUserEndpoint(final String authorization) throws AuthorizationFailedException {
+        return this.validateToken(authorization, ErrorMessage.USER_SIGNED_OUT_CAN_NOT_DELETE_USER);
+
+    }
+
+    public UserEntity validateTokenForGetUserEndpoint(String authorization) throws AuthorizationFailedException {
+        return this.validateToken(authorization, ErrorMessage.USER_SIGNED_OUT_CAN_NOT_USER_DETAILS);
+    }
 }

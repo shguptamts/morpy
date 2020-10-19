@@ -78,6 +78,11 @@ public class UserController {
 
     }
 
+    /** signout's the user
+     * @param accessToken accesstoken of the user
+     * @return Signout Response
+     * @throws SignOutRestrictedException
+     */
     @PostMapping(path ="/user/signout", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<SignoutResponse> signOut(@RequestHeader("authorization") final String accessToken) throws SignOutRestrictedException {
 

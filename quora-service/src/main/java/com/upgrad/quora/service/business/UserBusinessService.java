@@ -1,8 +1,11 @@
 package com.upgrad.quora.service.business;
 
+import com.upgrad.quora.service.common.ErrorMessage;
 import com.upgrad.quora.service.dao.UserDao;
 import com.upgrad.quora.service.entity.UserEntity;
+import com.upgrad.quora.service.exception.AuthorizationFailedException;
 import com.upgrad.quora.service.exception.SignUpRestrictedException;
+import com.upgrad.quora.service.exception.UserNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -50,5 +53,34 @@ public class UserBusinessService {
         return userDao.createUser(userEntity);
     }
 
+    @Transactional
+    public void delete(UserEntity userEntity) {
+        userDao.delete(userEntity);
+    }
 
+    /** Authorize the delete operation on a user
+     * Only an admin can delete a User
+     * @param userEntityToDelete  user entity to be deleted
+     * @param userEntityLoggedIn  logged in user
+     * @return  true if user can delete the answer
+     * @throws AuthorizationFailedException exception is thrown if user is not allowed to delete the question
+     */
+    public boolean authorize(UserEntity userEntityToDelete, UserEntity userEntityLoggedIn) throws AuthorizationFailedException {
+        boolean isAdmin = userEntityLoggedIn.getRole().equals("admin");
+        if(isAdmin){
+            return true;
+        }else{
+            throw new AuthorizationFailedException("ATHR-003", ErrorMessage.USER_SIGNED_OUT_CAN_NOT_DELETE_USER.toString());
+        }
+    }
+
+
+
+    public UserEntity getUserByUuid(String userId) throws UserNotFoundException {
+        UserEntity userEntity = userDao.getUserByUuid(userId);
+        if(userEntity == null ){
+            throw new UserNotFoundException("USR-001", ErrorMessage.USER_UUID_DOES_NOT_EXIST.toString());
+        }
+        return userEntity;
+    }
 }
