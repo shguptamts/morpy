@@ -25,7 +25,8 @@ public enum ErrorMessage{
     USER_SIGNED_OUT_CAN_NOT_USER_DETAILS( "User is signed out.Sign in first to get user details"),
     USER_UUID_DOES_NOT_EXIST ("User with entered uuid does not exist"),
     ANSWER_UUID_DOES_NOT_EXIST ("Entered answer uuid does not exist"),
-    OWNER_OR_ADMIN_CAN_DELETE_ANSWER("Only the answer owner or admin can delete the answer");
+    OWNER_OR_ADMIN_CAN_DELETE_ANSWER("Only the answer owner or admin can delete the answer"),
+    USER_SIGNED_OUT_CAN_NOT_DELETE_USER("Only a Signed in Admin User can delete another User");
 
 
     private String value;

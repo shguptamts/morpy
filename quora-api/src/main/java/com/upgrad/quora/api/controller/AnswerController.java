@@ -61,5 +61,4 @@ public class AnswerController {
         return new ResponseEntity<AnswerDeleteResponse>( answerDeleteResponse, HttpStatus.ACCEPTED);
 
     }
-
 }
