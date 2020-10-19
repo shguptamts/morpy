@@ -99,4 +99,8 @@ public class AuthenticationService {
         return this.validateToken(authorization, ErrorMessage.USER_SIGNED_OUT_CAN_NOT_DELETE_USER);
 
     }
+
+    public UserEntity validateTokenForGetUserEndpoint(String authorization) throws AuthorizationFailedException {
+        return this.validateToken(authorization, ErrorMessage.USER_SIGNED_OUT_CAN_NOT_USER_DETAILS);
+    }
 }

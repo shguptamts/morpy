@@ -74,13 +74,6 @@ public class UserBusinessService {
         }
     }
 
-    public UserEntity getUserByUuid(String userUuid) throws Exception {
-        UserEntity userEntity = userDao.getUserByUuid(userUuid);
-        if(userEntity == null){
-            throw new Exception("The user uuid whose details are to be seen does not exist");
-        }
-        return userEntity;
-    }
 
 
     public UserEntity getUserByUuid(String userId) throws UserNotFoundException {
