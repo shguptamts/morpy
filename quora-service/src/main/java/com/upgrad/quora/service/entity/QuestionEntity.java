@@ -41,7 +41,7 @@ public class QuestionEntity implements Serializable {
     @OnDelete(action = OnDeleteAction.CASCADE)
     private UserEntity user;
 
-    @OneToMany(mappedBy = "question")
+    @OneToMany(mappedBy = "question", fetch = FetchType.LAZY)
     private List<AnswerEntity> answers;
 
     public int getId() {

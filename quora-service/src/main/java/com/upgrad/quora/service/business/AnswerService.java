@@ -35,11 +35,10 @@ public class AnswerService {
      * Only an owner or admin can delete the answer
      * @param answerEntity  answer entity, containing owner details
      * @param userEntity    user performing delete operation
-     * @param answerUuid    answer's uuid, to be deleted
      * @return  true if user can delete the answer
      * @throws AuthorizationFailedException exception is thrown if user is not allowed to delete the answer
      */
-    public boolean authorize(AnswerEntity answerEntity, UserEntity userEntity, String answerUuid) throws AuthorizationFailedException {
+    public boolean authorizeDeleteOp(AnswerEntity answerEntity, UserEntity userEntity) throws AuthorizationFailedException {
         boolean isOwner = answerEntity.getUser().getUuid().equals(userEntity.getUuid());
         boolean isAdmin = userEntity.getRole().equals("admin");
         if( isOwner || isAdmin){
@@ -48,4 +47,21 @@ public class AnswerService {
             throw new AuthorizationFailedException("ATHR-003", ErrorMessage.OWNER_OR_ADMIN_CAN_DELETE_ANSWER.toString());
         }
     }
+
+    public boolean authorizeEditOp(AnswerEntity answerEntity, UserEntity userEntity) throws AuthorizationFailedException {
+        boolean isOwner = answerEntity.getUser().getUuid().equals(userEntity.getUuid());
+        if( !isOwner ){
+           throw new AuthorizationFailedException("ATHR-003", ErrorMessage.OWNER_CAN_EDIT_ANSWER.toString());
+        }
+        return true;
+    }
+
+    public AnswerEntity createAnswer(AnswerEntity answerEntity) {
+        return answerDao.createAnswer(answerEntity);
+    }
+    public AnswerEntity editAnswer(AnswerEntity answerEntity) {
+        return answerDao.editAnswer(answerEntity);
+    }
+
+
 }

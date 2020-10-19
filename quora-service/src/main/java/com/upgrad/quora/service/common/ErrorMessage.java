@@ -24,6 +24,7 @@ public enum ErrorMessage{
      */
 
     ANSWER_UUID_DOES_NOT_EXIST ("Entered answer uuid does not exist"),
+    OWNER_CAN_EDIT_ANSWER("Only the answer owner can edit the answer"),
     OWNER_OR_ADMIN_CAN_DELETE_ANSWER("Only the answer owner or admin can delete the answer");
 
 
