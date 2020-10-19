@@ -97,5 +97,6 @@ public class AuthenticationService {
 
     public UserEntity validateTokenForDeleteUserEndpoint(final String authorization) throws AuthorizationFailedException {
         return this.validateToken(authorization, ErrorMessage.USER_SIGNED_OUT_CAN_NOT_DELETE_USER);
+
     }
 }

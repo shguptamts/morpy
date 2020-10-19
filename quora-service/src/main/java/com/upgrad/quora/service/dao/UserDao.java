@@ -67,7 +67,9 @@ public class UserDao {
         return userAuthEntity;
     }
 
+
     public void delete(UserEntity userEntity) {
         entityManager.remove(userEntity);
+
     }
 }
