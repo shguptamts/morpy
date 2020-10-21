@@ -28,7 +28,8 @@ public enum ErrorMessage{
     OWNER_OR_ADMIN_CAN_DELETE_QUESTION("Only the question owner or admin can delete the question"),
     OWNER_CAN_EDIT_ANSWER("Only the answer owner can edit the answer"),
     USER_SIGNED_OUT_CAN_NOT_DELETE_USER("User is signed out"),
-    OWNER_OR_ADMIN_CAN_DELETE_ANSWER("Only the answer owner or admin can delete the answer");
+    OWNER_OR_ADMIN_CAN_DELETE_ANSWER("Only the answer owner or admin can delete the answer"),
+    ONLY_ADMIN_CAN_DELETE_USER("Unauthorized Access, Entered user is not an admin");
 
 
     private String value;

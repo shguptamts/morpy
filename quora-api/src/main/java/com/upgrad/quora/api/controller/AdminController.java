@@ -23,7 +23,7 @@ public class AdminController {
     @Autowired
     private UserBusinessService userBusinessService;
 
-    @GetMapping(path = "/admin/user/{userId}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @DeleteMapping(path = "/admin/user/{userId}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<UserDeleteResponse> userDelete(@RequestHeader("authorization") final String authorization,
                                                                       @PathVariable("userId") final String userUuid) throws UserNotFoundException, AuthorizationFailedException {
 
