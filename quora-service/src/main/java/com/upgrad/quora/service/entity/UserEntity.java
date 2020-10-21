@@ -4,6 +4,7 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
+import java.util.List;
 
 @Entity
 @Table(name = "users")
@@ -77,6 +78,9 @@ public class UserEntity implements Serializable {
     @NotNull
     @Size(max = 30)
     private String contactNumber;
+
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
+    List<QuestionEntity> questions;
 
 
     public int getId() {
@@ -181,5 +185,13 @@ public class UserEntity implements Serializable {
 
     public void setContactNumber(String contactNumber) {
         this.contactNumber = contactNumber;
+    }
+
+    public List<QuestionEntity> getQuestions() {
+        return questions;
+    }
+
+    public void setQuestions(List<QuestionEntity> questions) {
+        this.questions = questions;
     }
 }

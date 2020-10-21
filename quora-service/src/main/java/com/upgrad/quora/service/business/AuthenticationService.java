@@ -105,16 +105,27 @@ public class AuthenticationService {
     public UserEntity validateTokenForEditAnswerEndpoint(final String authorization) throws AuthorizationFailedException {
         return this.validateToken(authorization, ErrorMessage.USER_SIGNED_OUT_CAN_NOT_EDIT_AN_ANSWER);
     }
-    public UserEntity validateTokenForGetAllquestionsEndpoint(final String authorization) throws AuthorizationFailedException {
-        return this.validateToken(authorization, ErrorMessage.USER_SIGNED_OUT_CAN_NOT_GET_ALL_QUESTION);
+    public UserEntity validateTokenForGetAllQuestionsPostedBySpecificUserEndpoint(final String authorization) throws AuthorizationFailedException {
+        return this.validateToken(authorization, ErrorMessage.USER_SIGNED_OUT_CAN_NOT_GET_ALL_QUESTIONS_POSTED_BY_A_USER);
     }
 
     public UserEntity validateTokenForDeleteUserEndpoint(final String authorization) throws AuthorizationFailedException {
         return this.validateToken(authorization, ErrorMessage.USER_SIGNED_OUT_CAN_NOT_DELETE_USER);
-
     }
 
     public UserEntity validateTokenForGetUserEndpoint(String authorization) throws AuthorizationFailedException {
         return this.validateToken(authorization, ErrorMessage.USER_SIGNED_OUT_CAN_NOT_USER_DETAILS);
     }
+
+    public UserEntity validateTokenForCreateQuestionEndpoint(final String authorization) throws AuthorizationFailedException {
+        return this.validateToken(authorization, ErrorMessage.USER_SIGNED_OUT_CAN_NOT_POST_A_QUESTION);
+    }
+    public UserEntity validateTokenForGetAllQuestionsEndpoint(final String authorization) throws AuthorizationFailedException {
+        return this.validateToken(authorization, ErrorMessage.USER_SIGNED_OUT_CAN_NOT_GET_ALL_QUESTION);
+    }
+
+    public UserEntity validateTokenForEditQuestionEndpoint(final String authorization) throws AuthorizationFailedException {
+        return this.validateToken(authorization, ErrorMessage.USER_SIGNED_OUT_CAN_NOT_EDIT_A_QUESTION);
+    }
+
 }

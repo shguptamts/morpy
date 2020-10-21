@@ -39,9 +39,7 @@ public class AnswerController {
                                                                                @PathVariable("questionId") final String questionUuid) throws AuthorizationFailedException, InvalidQuestionException {
 
         UserEntity userEntity = authenticationService.validateTokenForGetAllAnswersEndpoint(authorization);
-
-        QuestionEntity questionEntity =  questionService.getQuestionByUuid(questionUuid);
-
+        QuestionEntity questionEntity =  questionService.getQuestionByUuidForGetAllAnswerEnpoint(questionUuid);
 
         List<AnswerDetailsResponse> answerDetailsResponseList  = new ArrayList<>();
 
@@ -79,7 +77,7 @@ public class AnswerController {
                                                        @PathVariable("questionId") final String questionUuid,
                                                        AnswerRequest answerRequest) throws AuthorizationFailedException, InvalidQuestionException {
 
-        QuestionEntity questionEntity =  questionService.getQuestionByUuid(questionUuid);
+        QuestionEntity questionEntity =  questionService.getQuestionByUuidForCreateAnswerEnpoint(questionUuid);
         UserEntity userEntity = authenticationService.validateTokenForCreateAnswerEndpoint(authorization);
 
         AnswerEntity answerEntity = new AnswerEntity();
