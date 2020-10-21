@@ -70,7 +70,7 @@ public class UserBusinessService {
         if(isAdmin){
             return true;
         }else{
-            throw new AuthorizationFailedException("ATHR-003", ErrorMessage.USER_SIGNED_OUT_CAN_NOT_DELETE_USER.toString());
+            throw new AuthorizationFailedException("ATHR-003", ErrorMessage.ONLY_ADMIN_CAN_DELETE_USER.toString());
         }
     }
 
