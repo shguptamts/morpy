@@ -21,6 +21,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
+/**
+ *
+ */
 @RestController
 @RequestMapping("/")
 public class AnswerController {
@@ -34,6 +37,14 @@ public class AnswerController {
     @Autowired
     private AnswerService answerService;
 
+    /**
+     * Get all answers speccific to question
+     * @param authorization Access-token
+     * @param questionUuid  question uuid
+     * @return list of answers to the question
+     * @throws AuthorizationFailedException invalid access token
+     * @throws InvalidQuestionException invalid question uuid
+     */
     @GetMapping(path = "/answer/all/{questionId}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<List<AnswerDetailsResponse>> getAllAnswersToQuestion(@RequestHeader("authorization") final String authorization,
                                                                                @PathVariable("questionId") final String questionUuid) throws AuthorizationFailedException, InvalidQuestionException {
@@ -57,6 +68,13 @@ public class AnswerController {
         return new ResponseEntity<List<AnswerDetailsResponse>>(answerDetailsResponseList, HttpStatus.OK);
     }
 
+    /** Deletes an answer
+     * @param authorization Access-token
+     * @param answerUuid answer uuid
+     * @return answer uuid and status
+     * @throws AuthorizationFailedException invalid access-token
+     * @throws AnswerNotFoundException invalid answer uuid
+     */
     @DeleteMapping(path = "/answer/delete/{answerId}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<AnswerDeleteResponse> delete(@RequestHeader("authorization") final String authorization,
                                                        @PathVariable("answerId") final String answerUuid) throws AuthorizationFailedException, AnswerNotFoundException {
@@ -72,6 +90,15 @@ public class AnswerController {
 
     }
 
+    /**
+     * Creates an anwer
+     * @param authorization Access-token
+     * @param questionUuid question uuid
+     * @param answerRequest answer request body
+     * @return Answer uuid and status
+     * @throws AuthorizationFailedException invalid access-token
+     * @throws InvalidQuestionException inavild question uuid
+     */
     @PostMapping(path = "/question/{questionId}/answer/create",produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<AnswerResponse> createAnswer(@RequestHeader("authorization") final String authorization,
                                                        @PathVariable("questionId") final String questionUuid,
@@ -94,8 +121,14 @@ public class AnswerController {
 
 
     /**
-     * Edit a answer
+     * Edit an answer
      *
+     * @param authorization   Access-token
+     * @param answeruuid    Answer uuid
+     * @param answerEditRequest edit request
+     * @return answer uuid and status
+     * @throws AuthorizationFailedException Invalid access token
+     * @throws AnswerNotFoundException Invalid answer uuid
      */
     @PutMapping(path = "/answer/edit/{answerId}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<AnswerEditResponse> editAnswer(@RequestHeader("authorization") final String authorization,

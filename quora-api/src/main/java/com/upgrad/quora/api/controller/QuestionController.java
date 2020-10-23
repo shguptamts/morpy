@@ -112,6 +112,13 @@ public class QuestionController {
   }
 
 
+    /** Delete's a question
+     * @param authorization  Access-token
+     * @param questionUuid   question uuid
+     * @return  question uuid and status
+     * @throws AuthorizationFailedException invalid access-token
+     * @throws InvalidQuestionException invalid question uuid
+     */
     @DeleteMapping(path = "/question/delete/{questionId}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<QuestionDeleteResponse> delete(@RequestHeader("authorization") final String authorization,
                                                          @PathVariable("questionId") final String questionUuid) throws AuthorizationFailedException, InvalidQuestionException {

@@ -60,12 +60,11 @@ public class UserBusinessService {
 
     /** Authorize the delete operation on a user
      * Only an admin can delete a User
-     * @param userEntityToDelete  user entity to be deleted
      * @param userEntityLoggedIn  logged in user
      * @return  true if user can delete the answer
      * @throws AuthorizationFailedException exception is thrown if user is not allowed to delete the question
      */
-    public boolean authorize(UserEntity userEntityToDelete, UserEntity userEntityLoggedIn) throws AuthorizationFailedException {
+    public boolean authorize( UserEntity userEntityLoggedIn) throws AuthorizationFailedException {
         boolean isAdmin = userEntityLoggedIn.getRole().equals("admin");
         if(isAdmin){
             return true;
@@ -75,7 +74,11 @@ public class UserBusinessService {
     }
 
 
-
+    /** Get user by uuid
+     * @param userId  uuid
+     * @return user entity
+     * @throws UserNotFoundException if user does not exist by uuid
+     */
     public UserEntity getUserByUuid(String userId) throws UserNotFoundException {
         UserEntity userEntity = userDao.getUserByUuid(userId);
         if(userEntity == null ){

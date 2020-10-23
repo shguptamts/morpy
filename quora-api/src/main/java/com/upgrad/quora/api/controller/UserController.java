@@ -34,6 +34,11 @@ public class UserController {
     @Autowired
     private AuthenticationService authenticationService;
 
+    /** register a user
+     * @param signupUserRequest  signup request body
+     * @return user uuid and status
+     * @throws SignUpRestrictedException if username and email exists
+     */
     @PostMapping(value = "/user/signup", consumes = MediaType.APPLICATION_JSON_UTF8_VALUE, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<SignupUserResponse> signUp(final SignupUserRequest signupUserRequest) throws SignUpRestrictedException {
 
@@ -61,6 +66,14 @@ public class UserController {
 
     }
 
+    /** login, the user
+     * @param authorization  basic auth
+     * @return user uuid, status, and  access token in headers
+     * @throws AuthenticationFailedException invalid username or password
+     */
+    /*
+
+     */
     @PostMapping(path ="/user/signin",  produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<SigninResponse> signIn(@RequestHeader("authorization") final String authorization) throws AuthenticationFailedException {
         byte[]  decode = Base64.getDecoder().decode(authorization.split("Basic ")[1]);

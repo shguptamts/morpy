@@ -24,6 +24,12 @@ public class QuestionService {
     @Autowired
     private UserDao userDao;
 
+    /** gets the question entity for the uuid passed
+     * @param questionUuid uuid
+     * @param errorMessage error message to be throwed in exception
+     * @return question entity
+     * @throws InvalidQuestionException invalid question uuid
+     */
     private  QuestionEntity getQuestionByUuid(String questionUuid, ErrorMessage errorMessage) throws InvalidQuestionException {
         QuestionEntity questionEntity = questionDao.getQuestionByUuid(questionUuid);
         if(questionEntity == null){

@@ -48,6 +48,13 @@ public class AnswerService {
         }
     }
 
+    /**  Authorize the edit operation on an answer
+     * Only an owner can delete the answer
+     * @param answerEntity answer entity, containing owner details
+     * @param userEntity user performing edit operation
+     * @return true if user can edit the answer
+     * @throws AuthorizationFailedException xception is thrown if user is not allowed to edit the answer
+     */
     public boolean authorizeEditOp(AnswerEntity answerEntity, UserEntity userEntity) throws AuthorizationFailedException {
         boolean isOwner = answerEntity.getUser().getUuid().equals(userEntity.getUuid());
         if( !isOwner ){

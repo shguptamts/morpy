@@ -3,7 +3,6 @@ package com.upgrad.quora.api.controller;
 import com.upgrad.quora.api.model.UserDeleteResponse;
 import com.upgrad.quora.service.business.AuthenticationService;
 import com.upgrad.quora.service.business.UserBusinessService;
-//import com.upgrad.quora.service.business.UserService;
 import com.upgrad.quora.service.entity.UserEntity;
 import com.upgrad.quora.service.exception.AuthorizationFailedException;
 import com.upgrad.quora.service.exception.UserNotFoundException;
@@ -12,6 +11,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
 
 @RestController
 @RequestMapping("/")
@@ -23,6 +23,13 @@ public class AdminController {
     @Autowired
     private UserBusinessService userBusinessService;
 
+    /** Deletes user
+     * @param authorization  access token
+     * @param userUuid User uuid
+     * @return response for delete operation
+     * @throws UserNotFoundException  If uuid is invalid
+     * @throws AuthorizationFailedException If access token is invalid
+     */
     @DeleteMapping(path = "/admin/user/{userId}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<UserDeleteResponse> userDelete(@RequestHeader("authorization") final String authorization,
                                                                       @PathVariable("userId") final String userUuid) throws UserNotFoundException, AuthorizationFailedException {
@@ -30,7 +37,7 @@ public class AdminController {
         UserEntity userEntityLoggedIn = authenticationService.validateTokenForDeleteUserEndpoint(authorization);
         UserEntity userEntityToDelete = userBusinessService.getUserByUuid(userUuid);
 
-        userBusinessService.authorize(userEntityToDelete,userEntityLoggedIn);
+        userBusinessService.authorize(userEntityLoggedIn);
         userBusinessService.delete(userEntityToDelete);
 
 

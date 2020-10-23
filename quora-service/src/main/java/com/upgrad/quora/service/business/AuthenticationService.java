@@ -1,6 +1,7 @@
 package com.upgrad.quora.service.business;
 
 import com.upgrad.quora.service.common.ErrorMessage;
+import com.upgrad.quora.service.dao.UserAuthDao;
 import com.upgrad.quora.service.dao.UserDao;
 import com.upgrad.quora.service.entity.UserAuthEntity;
 import com.upgrad.quora.service.entity.UserEntity;
@@ -20,6 +21,15 @@ public class AuthenticationService {
     @Autowired
     private UserDao userDao;
 
+    @Autowired
+    private UserAuthDao userAuthDao;
+
+    /** Authenticate the user
+     * @param username  username
+     * @param password password
+     * @return access-token
+     * @throws AuthenticationFailedException if invalid username
+     */
     @Transactional
     public UserAuthEntity authenticate(String username, String password) throws AuthenticationFailedException {
 
@@ -42,7 +52,7 @@ public class AuthenticationService {
             userAuthEntity.setLoginAt(now);
             userAuthEntity.setExpiresAt(expiresAt);
 
-            return userDao.createAuthToken(userAuthEntity);
+            return userAuthDao.createAuthToken(userAuthEntity);
 
         }else{
             throw new AuthenticationFailedException("ATH-002","Password failed");
@@ -51,13 +61,13 @@ public class AuthenticationService {
 
     @Transactional
     public String signOut(String accessToken) throws SignOutRestrictedException {
-        UserAuthEntity userAuthEntity = userDao.getUserByAccessToken(accessToken);
+        UserAuthEntity userAuthEntity = userAuthDao.getUserByAccessToken(accessToken);
         if(userAuthEntity == null){
             throw new SignOutRestrictedException("SGR-001","User is not Signed in");
         }
 
         userAuthEntity.setLogoutAt(ZonedDateTime.now());
-        userDao.updateUserAuth(userAuthEntity);
+        userAuthDao.updateUserAuth(userAuthEntity);
         return userAuthEntity.getUser().getUuid();
 
     }
@@ -70,7 +80,7 @@ public class AuthenticationService {
      * @throws AuthorizationFailedException
      */
     private UserEntity validateToken(String authorization, final ErrorMessage errorMessage) throws AuthorizationFailedException {
-        UserAuthEntity userAuthEntity = userDao.getUserByAccessToken(authorization);
+        UserAuthEntity userAuthEntity = userAuthDao.getUserByAccessToken(authorization);
         if(userAuthEntity == null){
             throw new AuthorizationFailedException("ATHR-001","User has not signed in");
         }
